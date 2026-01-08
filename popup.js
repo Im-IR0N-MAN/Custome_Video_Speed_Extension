@@ -1,9 +1,10 @@
 const slider = document.getElementById('speedSlider');
 const input = document.getElementById('speedInput');
+const resetBtn = document.getElementById('resetBtn');
 
 function updateTrackColor(val) {
-  const min = parseFloat(slider.min);
-  const max = parseFloat(slider.max);
+const min = parseFloat(slider.min) || 0.5;
+  const max = parseFloat(slider.max) || 4.0;  
   const percentage = ((val - min) / (max - min)) * 100;
   slider.style.background = `linear-gradient(to right, #DC143C ${percentage}%, #f1f5f9 ${percentage}%)`;
 }
@@ -28,3 +29,10 @@ chrome.storage.local.get(['videoSpeed'], (result) => {
   const savedSpeed = result.videoSpeed || 1.0;
   setSpeed(savedSpeed);
 });
+
+if (resetBtn) {
+  resetBtn.addEventListener('click', () => {
+    setSpeed(1.0);
+    console.log("Speed reset to 1.0x");
+  });
+}

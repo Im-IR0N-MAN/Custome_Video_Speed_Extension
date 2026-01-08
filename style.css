@@ -83,3 +83,30 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   display: none;
 }
+
+#resetBtn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-grey);
+  background: transparent;
+  border: 1px solid var(--track);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  user-select: none;
+}
+
+#resetBtn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(220, 20, 60, 0.05);
+}
+
+#resetBtn:active {
+  transform: scale(0.95);
+}
