@@ -1,34 +1,21 @@
 const slider = document.getElementById('speedSlider');
 const input = document.getElementById('speedInput');
 
+// Sync UI on open
 chrome.storage.local.get(['videoSpeed'], (result) => {
-  if (result.videoSpeed) {
-    updateUI(result.videoSpeed);
-  }
+  const speed = result.videoSpeed || 1.0;
+  slider.value = speed;
+  input.value = speed;
 });
-
-function updateUI(val) {
-  slider.value = val;
-  input.value = val;
-}
 
 function setSpeed(value) {
   const speed = parseFloat(value);
-  updateUI(speed);
+  slider.value = speed;
+  input.value = speed;
   
+  // Save to storage - content.js will "hear" this change automatically
   chrome.storage.local.set({ videoSpeed: speed });
-
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.scripting.executeScript({
-      target: { tabId: tabs[0].id },
-      func: (s) => {
-        const videos = document.querySelectorAll('video');
-        videos.forEach(v => v.playbackRate = s);
-      },
-      args: [speed]
-    });
-  });
 }
 
-slider.addEventListener('input', (e) => setSpeed(e.target.value)); 
+slider.addEventListener('input', (e) => setSpeed(e.target.value));
 input.addEventListener('input', (e) => setSpeed(e.target.value));
